@@ -1096,7 +1096,9 @@ void ScreenLockSystemAbility::UnlockScreenEvent(int stateResult)
         return;
     }
     if (stateResult == ScreenChange::EARLY_SUCCESS) {
-        SetScreenlocked(false, GetUserIdFromCallingUid());
+        int32_t userId = GetUserIdFromCallingUid();
+        SetScreenlocked(false, userId);
+        PublishEvent("usual.event.SCREEN_LOCK_EXITING", userId);
         return;
     }
     if (stateResult == ScreenChange::SCREEN_SUCC) {
